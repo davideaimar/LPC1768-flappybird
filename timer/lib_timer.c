@@ -171,7 +171,7 @@ uint32_t init_timer ( uint8_t timer_num, uint32_t TimerInterval )
 //*** <<< end of configuration section >>>    ***
 
 	NVIC_EnableIRQ(TIMER0_IRQn);
-	NVIC_SetPriority(TIMER0_IRQn, 1);		/* same priority of paddle */
+	NVIC_SetPriority(TIMER0_IRQn, 1);		
 	return (1);
   }
   else if ( timer_num == 1 )
@@ -180,7 +180,7 @@ uint32_t init_timer ( uint8_t timer_num, uint32_t TimerInterval )
 	LPC_TIM1->MCR = 3;				/* Interrupt and Reset on MR1 */
 
 	NVIC_EnableIRQ(TIMER1_IRQn);
-	NVIC_SetPriority(TIMER1_IRQn, 1);		/* same priority of ball */
+	NVIC_SetPriority(TIMER1_IRQn, 1);		
 	return (1);
   }
 	else if ( timer_num == 2 )

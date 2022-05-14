@@ -16,10 +16,7 @@
 #include "../can/can_lib.h"
 #include "../flappy_bird/flappy_bird.h"
 
-uint8_t num_sin = 0;
-uint8_t ticks = 0;
-
-uint16_t SinTable[45] = {
+volatile uint16_t SinTable[45] = {
     410, 467, 523, 576, 627, 673, 714, 749, 778,
     799, 813, 819, 817, 807, 789, 764, 732, 694, 
     650, 602, 550, 495, 438, 381, 324, 270, 217,
@@ -62,15 +59,17 @@ void TIMER1_IRQHandler (void)
 
 void TIMER2_IRQHandler (void)
 {
-	
+	static int ticks = 0;
+	static uint8_t num_sin = 0;
 	/* DAC management */	
 	LPC_DAC->DACR = SinTable[ticks]<<6;
-	ticks++;
+	ticks = ticks + 1;
 	if(ticks==45) {
 		num_sin++;
 		ticks=0;
 		if (num_sin > N_SIN ){
 			num_sin = 0;
+			ticks = 0;
 			disable_timer(2);
 		}
 	}	

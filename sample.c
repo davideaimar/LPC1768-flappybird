@@ -30,12 +30,22 @@
 #include "joystick/joystick.h"
 #include "TouchPanel/TouchPanel.h"
 #include "flappy_bird/flappy_bird.h"
+#include <stdlib.h>
 
 int main(void) {
 	
   SystemInit();  												/* System Initialization (i.e., PLL)  */
 	
 	BUTTON_init();
+	
+	/* these lines are used to enable DAC */
+	LPC_PINCON->PINSEL1 |= (1<<21);
+	LPC_PINCON->PINSEL1 &= ~(1<<20);
+	LPC_GPIO0->FIODIR |= (1<<26);
+	
+	/* Initialize random seed */
+	srand((unsigned) 1);
+	
 	//joystick_init();
   LCD_Initialization();
 	TP_Init();
@@ -56,7 +66,7 @@ int main(void) {
 	enable_timer(1); // can protocol
 	
 	game_setup();
-	game_start();
+	game_start(0, 150, 0);
 	
 	LPC_SC->PCON |= 0x1;									/* power-down	mode										*/
 	LPC_SC->PCON &= ~(0x2);						

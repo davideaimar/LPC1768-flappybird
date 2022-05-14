@@ -1,5 +1,6 @@
 
 #include "can_lib.h"
+#include <stdio.h>
 #include "lpc17xx.h"
 #include "../GLCD/GLCD.h" 
 #include "../RIT/RIT.h"
@@ -15,28 +16,19 @@ uint16_t line = 0;
 void print_debug(uint8_t * text){
 	#ifdef DEBUG
 	int i;
-	GUI_Text(0, line, text, White, Red);
+	GUI_Text(0, line, text, Black, Cyan);
 	line += 16;
 	if (line > MAX_Y - 50){
 		line = 0;
 		for(i=0; i<MAX_X;i++)
-			LCD_DrawLine(i, 0, i, MAX_Y-50, Red);
+			LCD_DrawLine(i, 0, i, MAX_Y-50, Cyan);
 	}
-	#endif 
+	#endif
 }
 
 static void replicate_message(LPC_CAN_TypeDef * REC_CH, CAN_MSG * msg){
 	if (REC_CH==LPC_CAN1 && ch2_count>0)	CAN_Send(LPC_CAN2, msg);
 	else if (REC_CH==LPC_CAN2 && ch1_count>0)	CAN_Send(LPC_CAN1, msg);
-}
-
-static void decodeDrawMessage(CAN_MSG * msg) {
-	uint16_t x;
-	uint16_t y;
-	x = msg->dataA[0];
-	y = msg->dataA[1];
-	y |= msg->dataA[2] << 8;
-	LCD_SetPoint(x,y,White);
 }
 
 static void decodeMessage(CAN_MSG * rec_data, LPC_CAN_TypeDef * REC_CH) {
@@ -69,7 +61,7 @@ static void decodeMessage(CAN_MSG * rec_data, LPC_CAN_TypeDef * REC_CH) {
 					send_syncrp(LPC_CAN1, rec_rp_count+1);
 				}
 				sprintf(str, "CH1: %d - CH2: %d", ch1_count, ch2_count);
-				GUI_Text(0, MAX_Y-16,(uint8_t *) str, White, Red);
+				GUI_Text(0, MAX_Y-16,(uint8_t *) str, Black, Green);
 				break;
 			default:
 				replicate_message(REC_CH, rec_data);
@@ -81,22 +73,6 @@ static void decodeMessage(CAN_MSG * rec_data, LPC_CAN_TypeDef * REC_CH) {
 		rec_id = rec_data->id & 0xff;
 		switch (rec_id) {
 			case 0x1:
-				// Joystick button message
-				counter += 1;
-				sprintf(str, "%d", counter);
-				GUI_Text(0, 0, (uint8_t *) str, White, Red);
-				break;
-			case 0x2:
-				// Touch signal
-				decodeDrawMessage(rec_data);
-				break;
-			case 0x3:
-				LCD_Clear(Red);
-				GUI_Text(0, 280, (uint8_t *) " touch here : 1 sec to clear  ", Red, White);			
-				sprintf(str, "ID lobby: %d", lobby);
-				GUI_Text(MAX_X/2 + 20, MAX_Y-16, (uint8_t *) str, White, Red);
-				sprintf(str, "CH1: %d - CH2: %d", ch1_count, ch1_count);
-				GUI_Text(0, MAX_Y-16,(uint8_t *) str, White, Red);
 				break;
 			default:
 				break;
@@ -111,7 +87,6 @@ static void decodeMessage(CAN_MSG * rec_data, LPC_CAN_TypeDef * REC_CH) {
 
 void CAN_IRQHandler(){
 	CAN_MSG rec_data;
-	print_debug((uint8_t *) "inside can interrupt");
 	// if CH1 has a message to be received
 	if ( CAN_HasReceivedMessage(LPC_CAN1) ) {
 		// receive the message 
