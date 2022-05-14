@@ -5,6 +5,8 @@
 
 extern uint8_t ch1_count;
 extern uint8_t ch2_count;
+extern uint8_t ch1_same_lobby_count;
+extern uint8_t ch2_same_lobby_count;
 extern uint8_t lobby;
 extern CAN_MSG send_data;
 
@@ -35,26 +37,50 @@ void send_syncrq(LPC_CAN_TypeDef * CH){
 		// send reply to other channel with cnt = 1
 		if (CH==LPC_CAN1){
 			ch1_count = 0;
-			send_syncrp(LPC_CAN2, 1); 
+			send_syncrp(LPC_CAN2, 1, &send_data); 
 		}
 		else {
 			ch2_count = 0;  
-			send_syncrp(LPC_CAN1, 1);
+			send_syncrp(LPC_CAN1, 1, &send_data);
 		}
 		//CAN_resetTXerr(CH);
 	}
 }
 
-void send_syncrp(LPC_CAN_TypeDef * CH, uint8_t cnt){
+void send_syncrp(LPC_CAN_TypeDef * CH, uint8_t cnt, CAN_MSG * source_packet){
 	if (CH==LPC_CAN1)
 		print_debug((uint8_t *) "Send rep on CH1");
 	else
 		print_debug((uint8_t *) "Send rep on CH2");
 	send_data.id = 0x001;
-	send_data.len = 1;
+	send_data.len = 8;
 	send_data.id_format = 0;
 	send_data.msg_type = 0;
 	send_data.dataA[0] = cnt;
+	if (cnt == 1) {
+		// if first reply from the edge
+		send_data.dataA[1] = send_data.dataA[2] = send_data.dataA[3] = 0x0;
+		send_data.dataB[0] = send_data.dataB[1] = send_data.dataB[2] = send_data.dataB[3] = 0x0;
+		if (lobby <= 3) {
+			send_data.dataA[lobby] = 0x1;
+		} else {
+			send_data.dataB[lobby-4] = 0x1;
+		}
+	} else {
+		// if not first reply from the edge
+		send_data.dataA[1] = source_packet->dataA[1];
+		send_data.dataA[2] = source_packet->dataA[2];
+		send_data.dataA[3] = source_packet->dataA[3];
+		send_data.dataB[0] = source_packet->dataB[0];
+		send_data.dataB[1] = source_packet->dataB[1];
+		send_data.dataB[2] = source_packet->dataB[2];
+		send_data.dataB[3] = source_packet->dataB[3];
+		if (lobby <= 3) {
+			send_data.dataA[lobby] = send_data.dataA[lobby] + 0x1;
+		} else {
+			send_data.dataB[lobby-4] = send_data.dataB[lobby-4] + 0x1;
+		}
+	}
 	CAN_Send(CH, &send_data);
 	//CAN_resetTXerr(CH);
 }

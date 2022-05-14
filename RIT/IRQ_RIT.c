@@ -31,6 +31,9 @@ int down_KEY1=0;
 int down_KEY2=0;
 extern uint8_t ch1_count;
 extern uint8_t ch2_count;
+extern uint8_t ch1_same_lobby_count;
+extern uint8_t ch2_same_lobby_count;
+
 uint8_t lobby = 1; // 1...7 -> first 3 bit of CAN ID
 CAN_MSG rec_data;
 extern CAN_MSG send_data;
@@ -52,6 +55,7 @@ void RIT_IRQHandler (void)
 						lobby = lobby == 7 ? 7 : lobby+1;
 						sprintf(str, "ID lobby: %d", lobby);
 						GUI_Text(MAX_X/2 + 20, MAX_Y-16, (uint8_t *) str, Black, BOTTOM_COLOR);
+						launch_sync();
 					}
 					break;
 				default:
@@ -75,6 +79,7 @@ void RIT_IRQHandler (void)
 						lobby = lobby == 1 ? 1 : lobby-1;
 						sprintf(str, "ID lobby: %d", lobby);
 						GUI_Text(MAX_X/2 + 20, MAX_Y-16, (uint8_t *) str, Black, BOTTOM_COLOR);
+						launch_sync();
 					}
 					break;
 				default:
@@ -96,7 +101,7 @@ void RIT_IRQHandler (void)
 					// CENTRAL BUTTON CODE HERE 
 					if (GAME_STATUS==0){
 						launch_sync();
-						sprintf(str, "CH1: %d - CH2: %d", ch1_count, ch2_count);
+						sprintf(str, "CH1: %d - CH2: %d", ch1_same_lobby_count, ch2_same_lobby_count);
 						GUI_Text(0, MAX_Y-16,(uint8_t *) str, Black, BOTTOM_COLOR);
 					} else if (GAME_STATUS == 2){
 						disable_timer(0);

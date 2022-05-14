@@ -26,7 +26,7 @@ void CAN_DisableInterrupt(LPC_CAN_TypeDef * CH);
 void CAN_resetTXerr(LPC_CAN_TypeDef * CH);
 void launch_sync(void);
 void send_syncrq(LPC_CAN_TypeDef * CH);
-void send_syncrp(LPC_CAN_TypeDef * CH, uint8_t cnt);
+void send_syncrp(LPC_CAN_TypeDef * CH, uint8_t cnt, CAN_MSG * source_packet);
 void print_debug(uint8_t * text);
 void FlappyCAN_Send1(void);
 void FlappyCAN_Send2(uint16_t start_y, int16_t start_speed, uint16_t score);

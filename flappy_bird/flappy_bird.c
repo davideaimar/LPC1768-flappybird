@@ -10,6 +10,8 @@
 extern uint8_t lobby;
 extern uint8_t ch1_count;
 extern uint8_t ch2_count;
+extern uint8_t ch1_same_lobby_count;
+extern uint8_t ch2_same_lobby_count;
 extern CAN_MSG send_data;
 
 const int jump_speed = -6; // constant jump power
@@ -52,7 +54,7 @@ void game_set(uint16_t start_y, int16_t start_speed, uint16_t initial_score, uin
 	LCD_DrawRect(0, MAX_Y-BOTTOM_SPACE, MAX_X, BOTTOM_SPACE, BOTTOM_COLOR);			
 	sprintf(str, "ID lobby: %d", lobby);
 	GUI_Text(MAX_X/2 + 20, MAX_Y-16, (uint8_t *) str, Black, BOTTOM_COLOR);
-	sprintf(str, "CH1: %d - CH2: %d", ch1_count, ch1_count);
+	sprintf(str, "CH1: %d - CH2: %d", ch1_same_lobby_count, ch2_same_lobby_count);
 	GUI_Text(0, MAX_Y-16,(uint8_t *) str, Black, BOTTOM_COLOR);
 	sprintf(str, "%d", score);
 	GUI_Text(0, 0, (uint8_t *) str, Yellow, BG_COLOR);
@@ -141,8 +143,14 @@ void game_loop(){
 			draw_bird(bird_x, bird_y);
 		}
 		else if (next_step == 1){
-			FlappyCAN_Send2(bird_y, vert_speed, score);
-			game_set(150, 0, score, 1);
+			if (ch1_same_lobby_count > 0 || ch1_same_lobby_count > 0 ) {
+				// if there is someone playing with me, send the packet
+				FlappyCAN_Send2(bird_y, vert_speed, score);
+				game_set(150, 0, score, 1);
+			} else {
+				// otherwise play alone
+				game_set(bird_y, vert_speed, score, 2);
+			}
 		} else if (next_step == 2){
 			FlappyCAN_Send3(score);
 			game_set(150, 0, score, 4);
