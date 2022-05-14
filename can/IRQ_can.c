@@ -4,24 +4,26 @@
 #include "lpc17xx.h"
 #include "../GLCD/GLCD.h" 
 #include "../RIT/RIT.h"
+#include "../flappy_bird/flappy_bird.h"
 
 char str[40];
 uint8_t rec = 0;
 volatile uint8_t ch1_count = 0;
 volatile uint8_t ch2_count = 0;
 extern uint8_t lobby;
-uint32_t counter = 0;
+#ifdef DEBUG
 uint16_t line = 0;
+#endif
 
 void print_debug(uint8_t * text){
 	#ifdef DEBUG
 	int i;
-	GUI_Text(0, line, text, Black, Cyan);
+	GUI_Text(0, line, text, Black, BG_COLOR);
 	line += 16;
 	if (line > MAX_Y - 50){
 		line = 0;
 		for(i=0; i<MAX_X;i++)
-			LCD_DrawLine(i, 0, i, MAX_Y-50, Cyan);
+			LCD_DrawLine(i, 0, i, MAX_Y-50, BG_COLOR);
 	}
 	#endif
 }
@@ -61,7 +63,7 @@ static void decodeMessage(CAN_MSG * rec_data, LPC_CAN_TypeDef * REC_CH) {
 					send_syncrp(LPC_CAN1, rec_rp_count+1);
 				}
 				sprintf(str, "CH1: %d - CH2: %d", ch1_count, ch2_count);
-				GUI_Text(0, MAX_Y-16,(uint8_t *) str, Black, Green);
+				GUI_Text(0, MAX_Y-16,(uint8_t *) str, Black, BOTTOM_COLOR);
 				break;
 			default:
 				replicate_message(REC_CH, rec_data);
@@ -70,9 +72,22 @@ static void decodeMessage(CAN_MSG * rec_data, LPC_CAN_TypeDef * REC_CH) {
 	}
 	// if the received message is in the same lobby of the current instance then process the message.
 	else if (rec_lobby == lobby) {
+		uint16_t start_y, score;
+		int16_t start_speed;
 		rec_id = rec_data->id & 0xff;
 		switch (rec_id) {
 			case 0x1:
+				game_set(150, 0, 0, 1);
+				break;
+			case 0x2:
+				start_y = (rec_data->dataA[0] << 8) | rec_data->dataA[1];
+				start_speed = (rec_data->dataA[2] << 8) | rec_data->dataA[3];
+				score = (rec_data->dataB[0] << 8) | rec_data->dataB[1];
+				game_set(start_y, start_speed, score, 2);
+				break;
+			case 0x3:
+				score = (rec_data->dataA[0] << 8) | rec_data->dataA[1];
+				game_set(150, 0, score, 4);
 				break;
 			default:
 				break;

@@ -11,3 +11,4 @@
 .\irq_can.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\irq_can.o: can\../GLCD/GLCD.h
 .\irq_can.o: can\../RIT/RIT.h
+.\irq_can.o: can\../flappy_bird/flappy_bird.h

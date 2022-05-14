@@ -28,5 +28,8 @@ void launch_sync(void);
 void send_syncrq(LPC_CAN_TypeDef * CH);
 void send_syncrp(LPC_CAN_TypeDef * CH, uint8_t cnt);
 void print_debug(uint8_t * text);
+void FlappyCAN_Send1(void);
+void FlappyCAN_Send2(uint16_t start_y, int16_t start_speed, uint16_t score);
+void FlappyCAN_Send3(uint16_t score);
 
 #endif

@@ -11,4 +11,6 @@
 .\irq_rit.o: RIT\../GLCD/GLCD.h
 .\irq_rit.o: RIT\../button_EXINT/button.h
 .\irq_rit.o: RIT\../can/can_lib.h
+.\irq_rit.o: RIT\../flappy_bird/flappy_bird.h
 .\irq_rit.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\irq_rit.o: RIT\../timer/timer.h

@@ -11,35 +11,74 @@ extern uint8_t lobby;
 extern uint8_t ch1_count;
 extern uint8_t ch2_count;
 extern CAN_MSG send_data;
-int jump_speed = -6;
-int vert_speed;
+
+const int jump_speed = -6; // constant jump power
+int16_t vert_speed;
 uint16_t bird_x;
 uint16_t bird_y;
-uint8_t clicked = 0;
+uint8_t clicked = 0; // for avoiding keeping toch pressed
 uint8_t timer_scale = 0;
 uint8_t pipe_x;
 uint8_t pipe_y;
+uint16_t score = 0;
+uint8_t skipped_pipe;
 
-void game_setup(){
-	char str[20];
+volatile uint8_t GAME_STATUS = 0; 
+/* 
+	0 = waiting for starting player
+	1 = game started but is not in this board
+	2 = game going and it's in this board
+	3 = game paused and it's in this board
+	4 = game over
+*/
+
+void game_set(uint16_t start_y, int16_t start_speed, uint16_t initial_score, uint8_t status){
+	char str[30];
+	
+	init_timer(0, 2 * 0x6108 ); // 1ms * 25MHz = 25*10^3 = 0x6108
+	disable_timer(0);
+	
+	bird_x =  0;
+	bird_y = start_y;
+	vert_speed = start_speed;
+	skipped_pipe = 0;
+	score = initial_score;
+	GAME_STATUS = status;
+	
+	if (vert_speed == 0)
+		vert_speed = jump_speed;
+	
 	LCD_Clear(Cyan);
 	LCD_DrawRect(0, MAX_Y-BOTTOM_SPACE, MAX_X, BOTTOM_SPACE, BOTTOM_COLOR);			
 	sprintf(str, "ID lobby: %d", lobby);
 	GUI_Text(MAX_X/2 + 20, MAX_Y-16, (uint8_t *) str, Black, BOTTOM_COLOR);
 	sprintf(str, "CH1: %d - CH2: %d", ch1_count, ch1_count);
 	GUI_Text(0, MAX_Y-16,(uint8_t *) str, Black, BOTTOM_COLOR);
-}
-
-void game_start(uint16_t start_x, uint16_t start_y, uint16_t start_speed){
-	bird_x = start_x;
-	bird_y = start_y;
-	vert_speed = start_speed;
-	init_timer(0, 2 * 0x6108 ); 						  /* 1ms * 25MHz = 25*10^3 = 0x6108 */
-	enable_timer(0);
-	// generate pipe x from 100 to 160
-	// generate pipe y from 60 to 170
-	pipe_x = rand() % 60 + 100, pipe_y = rand() % 110 + 60;
-	draw_pipe(pipe_x, pipe_y);
+	sprintf(str, "%d", score);
+	GUI_Text(0, 0, (uint8_t *) str, Yellow, BG_COLOR);
+	
+	if (GAME_STATUS==4){
+		GUI_Text(80, 140, (uint8_t *) "GAME OVER", Black, BG_COLOR);
+		sprintf(str, "Points: %d", score);
+		GUI_Text(80, 160, (uint8_t *) str, Black, BG_COLOR);
+		clicked = 50;
+	}
+		
+	if (GAME_STATUS == 0 || GAME_STATUS == 2) {
+		// generate pipe x from 100 to 160
+		// generate pipe y from 60 to 170
+		pipe_x = rand() % 60 + 100, pipe_y = rand() % 110 + 60;
+		draw_pipe(pipe_x, pipe_y);
+		draw_bird(bird_x, bird_y);
+	}
+	
+	if (GAME_STATUS==1){
+		GUI_Text(30, 140, (uint8_t *) "Wait for other player", Black, BG_COLOR);
+		sprintf(str, "Points: %d", score);
+		GUI_Text(80, 160, (uint8_t *) str, Black, BG_COLOR);
+	} else {
+		enable_timer(0);
+	}
 }
 
 void game_loop(){
@@ -53,14 +92,21 @@ void game_loop(){
 		if(y <= MAX_Y && x <= MAX_X){
 			if (clicked==0){
 				vert_speed = jump_speed;
-				emit_tone(HIGH_TONE);
+				emit_tone(MID_TONE);
 				clicked = 50;
+				if (GAME_STATUS == 4){
+					game_set(150, 0, 0, 0);
+				}
+				else if (GAME_STATUS==0){
+					GAME_STATUS = 2;
+					FlappyCAN_Send1();
+				}
 			}
 		}
 	} else {
-			clicked = clicked == 0 ? 0 : clicked-1;
-		}
-	if (timer_scale>=16){
+		clicked = clicked == 0 ? 0 : clicked-1;
+	}
+	if (timer_scale>=16 && GAME_STATUS == 2){
 		uint16_t old_x, old_y;
 		uint8_t next_step = 0;	// 0 = standard frame refresh; 1 = bird reached last X; 2 = will_lose
 		timer_scale=0;
@@ -69,13 +115,22 @@ void game_loop(){
 		
 		// new Y
 		bird_y += vert_speed*2;
+		bird_y = bird_y >= 0xFFF0 ? 0 : bird_y; // prevent overflow
 		// new X
 		bird_x += 2;
 		// increment falling speed
 		vert_speed += 1;
-		
-		if ( (bird_y + BIRD_HEIGHT + BOTTOM_SPACE > MAX_Y) || BIRD_HITTING_PIPE){
+		if ( skipped_pipe == 0 && bird_x > pipe_x + PIPE_WIDTH){
+			char str[10];
+			skipped_pipe = 1;
+			score++;
+			sprintf(str, "%d", score);
+			GUI_Text(0, 0, (uint8_t *) str, Yellow, BG_COLOR);
+			emit_tone(HIGH_TONE);
+		}
+		if ( (bird_y + BIRD_HEIGHT + BOTTOM_SPACE > MAX_Y) || ( skipped_pipe == 0 &&  BIRD_HITTING_PIPE ) ){
 			next_step = 2;
+			emit_tone(LOW_TONE);
 		}
 		else if (bird_x + BIRD_WIDTH > MAX_X){
 			next_step = 1;
@@ -86,11 +141,11 @@ void game_loop(){
 			draw_bird(bird_x, bird_y);
 		}
 		else if (next_step == 1){
-			game_setup();
-			game_start(0, bird_y, vert_speed);
+			FlappyCAN_Send2(bird_y, vert_speed, score);
+			game_set(150, 0, score, 1);
 		} else if (next_step == 2){
-			game_setup();
-			game_start(0, 150, 0);
+			FlappyCAN_Send3(score);
+			game_set(150, 0, score, 4);
 		}
 	}
 }

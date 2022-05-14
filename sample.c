@@ -56,17 +56,16 @@ int main(void) {
 	TouchPanel_Calibrate();
 	enable_RIT();
 	
-	init_timer(1, 0x5F5E100 ); 						/* 500ms * 25MHz */
+	// init_timer(1, 0x5F5E100 ); 						/* 500ms * 25MHz */
 	
 	GUI_Text(MAX_X/2 + 20, MAX_Y-16, (uint8_t *) "ID lobby: 1", Black, Green);
 
 	CAN_EnableInterrupt(LPC_CAN1);
 	CAN_EnableInterrupt(LPC_CAN2);
 	
-	enable_timer(1); // can protocol
+	launch_sync();
 	
-	game_setup();
-	game_start(0, 150, 0);
+	game_set(150, 0, 0, 0);
 	
 	LPC_SC->PCON |= 0x1;									/* power-down	mode										*/
 	LPC_SC->PCON &= ~(0x2);						

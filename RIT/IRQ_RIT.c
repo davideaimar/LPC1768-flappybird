@@ -12,7 +12,9 @@
 #include "../GLCD/GLCD.h"
 #include "../button_EXINT/button.h"
 #include "../can/can_lib.h"
+#include "../flappy_bird/flappy_bird.h"
 #include <stdio.h>
+#include "../timer/timer.h"
 
 /******************************************************************************
 ** Function name:		RIT_IRQHandler
@@ -33,6 +35,7 @@ uint8_t lobby = 1; // 1...7 -> first 3 bit of CAN ID
 CAN_MSG rec_data;
 extern CAN_MSG send_data;
 extern uint32_t counter;
+extern uint8_t GAME_STATUS;
 
 void RIT_IRQHandler (void)
 {						
@@ -45,9 +48,11 @@ void RIT_IRQHandler (void)
 			switch(down_INT0){
 				case 2:
 					// RIGHT BUTTON CODE HERE 
-					lobby = lobby == 7 ? 7 : lobby+1;
-					sprintf(str, "ID lobby: %d", lobby);
-					GUI_Text(MAX_X/2 + 20, MAX_Y-16, (uint8_t *) str, Black, Green);
+					if (GAME_STATUS==0){
+						lobby = lobby == 7 ? 7 : lobby+1;
+						sprintf(str, "ID lobby: %d", lobby);
+						GUI_Text(MAX_X/2 + 20, MAX_Y-16, (uint8_t *) str, Black, BOTTOM_COLOR);
+					}
 					break;
 				default:
 					break;
@@ -66,9 +71,11 @@ void RIT_IRQHandler (void)
 			switch(down_KEY1){
 				case 2:
 					// LEFT BUTTON CODE HERE 
-					lobby = lobby == 1 ? 1 : lobby-1;
-					sprintf(str, "ID lobby: %d", lobby);
-					GUI_Text(MAX_X/2 + 20, MAX_Y-16, (uint8_t *) str, Black, Green);
+					if (GAME_STATUS==0){
+						lobby = lobby == 1 ? 1 : lobby-1;
+						sprintf(str, "ID lobby: %d", lobby);
+						GUI_Text(MAX_X/2 + 20, MAX_Y-16, (uint8_t *) str, Black, BOTTOM_COLOR);
+					}
 					break;
 				default:
 					break;
@@ -87,9 +94,15 @@ void RIT_IRQHandler (void)
 			switch(down_KEY2){
 				case 2:
 					// CENTRAL BUTTON CODE HERE 
-					launch_sync();
-					sprintf(str, "CH1: %d - CH2: %d", ch1_count, ch2_count);
-					GUI_Text(0, MAX_Y-16,(uint8_t *) str, Black, Green);
+					if (GAME_STATUS==0){
+						launch_sync();
+						sprintf(str, "CH1: %d - CH2: %d", ch1_count, ch2_count);
+						GUI_Text(0, MAX_Y-16,(uint8_t *) str, Black, BOTTOM_COLOR);
+					} else if (GAME_STATUS == 2){
+						disable_timer(0);
+					} else if (GAME_STATUS == 3){
+						enable_timer(0);
+					}
 					break;
 				default:
 					break;
