@@ -9,8 +9,8 @@
 #define BIRD_HEIGHT 24
 #define BIRD_WIDTH 34
 #define BOTTOM_SPACE 20
-#define BG_COLOR 0x7FFF
-#define BOTTOM_COLOR 0xF800
+#define BG_COLOR 0x4e19
+#define BOTTOM_COLOR 0xded2
 #define PIPE_COLOR 0x07E0
 #define PIPE_HOLE_HEIGHT 100
 #define PIPE_WIDTH 48
@@ -23,8 +23,9 @@
 
 /* Private function prototypes -----------------------------------------------*/				
 void game_loop(void);
+void draw_bg(void);
 void draw_bird(uint16_t x, uint16_t y);
-void clear_bird(uint16_t x, uint16_t t, uint16_t bg );
+void clear_bird(uint16_t x, uint16_t y);
 void emit_tone(unsigned int intensity);
 void game_set(uint16_t start_y, int16_t start_speed, uint16_t initial_score, uint8_t status);
 void draw_pipe(uint16_t x, uint16_t y);

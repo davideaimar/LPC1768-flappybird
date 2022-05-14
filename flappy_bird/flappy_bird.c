@@ -50,7 +50,7 @@ void game_set(uint16_t start_y, int16_t start_speed, uint16_t initial_score, uin
 	if (vert_speed == 0)
 		vert_speed = jump_speed;
 	
-	LCD_Clear(Cyan);
+	draw_bg();
 	LCD_DrawRect(0, MAX_Y-BOTTOM_SPACE, MAX_X, BOTTOM_SPACE, BOTTOM_COLOR);			
 	sprintf(str, "ID lobby: %d", lobby);
 	GUI_Text(MAX_X/2 + 20, MAX_Y-16, (uint8_t *) str, Black, BOTTOM_COLOR);
@@ -60,9 +60,9 @@ void game_set(uint16_t start_y, int16_t start_speed, uint16_t initial_score, uin
 	GUI_Text(0, 0, (uint8_t *) str, Yellow, BG_COLOR);
 	
 	if (GAME_STATUS==4){
-		GUI_Text(80, 140, (uint8_t *) "GAME OVER", Black, BG_COLOR);
+		GUI_Text(80, 140, (uint8_t *) "GAME OVER", Yellow, BG_COLOR);
 		sprintf(str, "Points: %d", score);
-		GUI_Text(80, 160, (uint8_t *) str, Black, BG_COLOR);
+		GUI_Text(80, 160, (uint8_t *) str, Yellow, BG_COLOR);
 		clicked = 50;
 	}
 		
@@ -139,7 +139,7 @@ void game_loop(){
 		}
 		
 		if (next_step == 0){
-			clear_bird(old_x, old_y, BG_COLOR);
+			clear_bird(old_x, old_y);
 			draw_bird(bird_x, bird_y);
 		}
 		else if (next_step == 1){
