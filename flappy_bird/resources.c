@@ -378,8 +378,15 @@ CLOUD_COLOR, CLOUD_COLOR, CLOUD_COLOR, CLOUD_COLOR, CLOUD_COLOR, CLOUD_COLOR, CL
 
 void draw_bottom_line(){
 	char str[30];
+	uint8_t x, y;
 	
-	LCD_DrawRect(0, MAX_Y-BOTTOM_SPACE, MAX_X, BOTTOM_SPACE, BOTTOM_COLOR);			
+	// draw dirt
+	LCD_DrawRect(0, MAX_Y-BOTTOM_SPACE, MAX_X, BOTTOM_SPACE, BOTTOM_COLOR);
+	
+	// draw grass
+	for (y=0; y<6; y++)
+		for (x=0; x < MAX_X; x++)
+			LCD_SetPoint(x, y+(MAX_Y-BOTTOM_SPACE), ( (x+y) % 6 <= 3 ) ? Green : 0x1564 );
 	
 	sprintf(str, "Lobby: %d", lobby);
 	GUI_Text(170, MAX_Y-16, (uint8_t *) str, White, BOTTOM_COLOR);
@@ -437,13 +444,8 @@ void draw_bird(uint16_t x, uint16_t y){
 	bird_sequence = (bird_sequence+1) % 4;
 }
 
-void clear_pipe(uint16_t x, uint16_t y){
-	LCD_DrawRect(x, 0, PIPE_WIDTH, y, BG_COLOR);
-	LCD_DrawRect(x, y+PIPE_HOLE_HEIGHT, PIPE_WIDTH, MAX_Y-BOTTOM_SPACE-PIPE_HOLE_HEIGHT-y, BG_COLOR);
-}
-
 void draw_pipe(uint16_t x, uint16_t y){
-	// y is the starting y coordinate of the pipe hole
+	// y is the starting coordinate of the pipe hole
 	int i, j;
 	for (i = 0; i < MAX_Y-BOTTOM_SPACE; i++){
 		for (j=0; j<PIPE_WIDTH; j++){

@@ -117,7 +117,6 @@ void game_loop(){
 		// increment falling speed
 		vert_speed += 1;
 		if ( skipped_pipe == 0 && bird_x > pipe_x + PIPE_WIDTH){
-			char str[10];
 			skipped_pipe = 1;
 			score++;
 			update_screen_score();
