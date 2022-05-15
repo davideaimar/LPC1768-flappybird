@@ -51,18 +51,13 @@ void game_set(uint16_t start_y, int16_t start_speed, uint16_t initial_score, uin
 		vert_speed = jump_speed;
 	
 	draw_bg();
-	LCD_DrawRect(0, MAX_Y-BOTTOM_SPACE, MAX_X, BOTTOM_SPACE, BOTTOM_COLOR);			
-	sprintf(str, "ID lobby: %d", lobby);
-	GUI_Text(MAX_X/2 + 20, MAX_Y-16, (uint8_t *) str, Black, BOTTOM_COLOR);
-	sprintf(str, "CH1: %d - CH2: %d", ch1_same_lobby_count, ch2_same_lobby_count);
-	GUI_Text(0, MAX_Y-16,(uint8_t *) str, Black, BOTTOM_COLOR);
-	sprintf(str, "%d", score);
-	GUI_Text(0, 0, (uint8_t *) str, Yellow, BG_COLOR);
+	draw_bottom_line();
 	
 	if (GAME_STATUS==4){
 		GUI_Text(80, 140, (uint8_t *) "GAME OVER", Yellow, BG_COLOR);
 		sprintf(str, "Points: %d", score);
 		GUI_Text(80, 160, (uint8_t *) str, Yellow, BG_COLOR);
+		update_screen_score();
 		clicked = 50;
 	}
 		
@@ -75,9 +70,8 @@ void game_set(uint16_t start_y, int16_t start_speed, uint16_t initial_score, uin
 	}
 	
 	if (GAME_STATUS==1){
-		GUI_Text(30, 140, (uint8_t *) "Wait for other player", Black, BG_COLOR);
-		sprintf(str, "Points: %d", score);
-		GUI_Text(80, 160, (uint8_t *) str, Black, BG_COLOR);
+		GUI_Text(30, 140, (uint8_t *) "Wait for other player", Yellow, BG_COLOR);
+		update_screen_score();
 	} else {
 		enable_timer(0);
 	}
@@ -126,8 +120,7 @@ void game_loop(){
 			char str[10];
 			skipped_pipe = 1;
 			score++;
-			sprintf(str, "%d", score);
-			GUI_Text(0, 0, (uint8_t *) str, Yellow, BG_COLOR);
+			update_screen_score();
 			emit_tone(HIGH_TONE);
 		}
 		if ( (bird_y + BIRD_HEIGHT + BOTTOM_SPACE > MAX_Y) || ( skipped_pipe == 0 &&  BIRD_HITTING_PIPE ) ){

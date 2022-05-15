@@ -76,8 +76,7 @@ static void decodeMessage(CAN_MSG * rec_data, LPC_CAN_TypeDef * REC_CH) {
 					
 					send_syncrp(LPC_CAN1, rec_rp_count+1, rec_data);
 				}
-				sprintf(str, "CH1: %d - CH2: %d", ch1_same_lobby_count, ch2_same_lobby_count);
-				GUI_Text(0, MAX_Y-16,(uint8_t *) str, Black, BOTTOM_COLOR);
+				draw_bottom_line();
 				break;
 			default:
 				replicate_message(REC_CH, rec_data);
