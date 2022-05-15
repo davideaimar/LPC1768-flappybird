@@ -136,7 +136,7 @@ void game_loop(){
 			draw_bird(bird_x, bird_y);
 		}
 		else if (next_step == 1){
-			if (ch1_same_lobby_count > 0 || ch1_same_lobby_count > 0 ) {
+			if (ch1_same_lobby_count > 0 || ch2_same_lobby_count > 0 ) {
 				// if there is someone playing with me, send the packet
 				FlappyCAN_Send2(bird_y, vert_speed, score);
 				game_set(150, 0, score, 1);

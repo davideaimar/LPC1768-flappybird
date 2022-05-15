@@ -1,5 +1,6 @@
 
 #include "lpc17xx.h"
+#include <stdlib.h>
 #include "can_lib.h"
 #include "../GLCD/GLCD.h" 
 
@@ -93,8 +94,8 @@ void FlappyCAN_Send1(){
 	send_data.len = 0;
 	send_data.dataA[0] = send_data.dataA[1] = send_data.dataA[2] = send_data.dataA[3] = 0x0;
 	send_data.dataB[0] = send_data.dataB[1] = send_data.dataB[2] = send_data.dataB[3] = 0x0;
-	if (ch1_count>0) CAN_Send(LPC_CAN1, &send_data);
-	if (ch2_count>0) CAN_Send(LPC_CAN2, &send_data);
+	if (ch1_same_lobby_count>0) CAN_Send(LPC_CAN1, &send_data);
+	if (ch2_same_lobby_count>0) CAN_Send(LPC_CAN2, &send_data);
 }
 
 void FlappyCAN_Send2(uint16_t start_y, int16_t start_speed, uint16_t score){
@@ -110,8 +111,13 @@ void FlappyCAN_Send2(uint16_t start_y, int16_t start_speed, uint16_t score){
 	send_data.dataB[0] = ((score & 0xFF00) >> 8);
 	send_data.dataB[1] = score & 0xFF;
 	send_data.dataB[2] = send_data.dataB[3] = 0x0;
-	if (ch1_count>0) CAN_Send(LPC_CAN1, &send_data);
-	if (ch2_count>0) CAN_Send(LPC_CAN2, &send_data);
+	if (ch1_same_lobby_count > 0 && ch2_same_lobby_count > 0){
+		uint8_t ch = (rand() % 2);
+		if (ch==0) CAN_Send(LPC_CAN1, &send_data);
+		else CAN_Send(LPC_CAN2, &send_data);
+	}
+	else if (ch1_same_lobby_count>0) CAN_Send(LPC_CAN1, &send_data);
+	else if (ch2_same_lobby_count>0) CAN_Send(LPC_CAN2, &send_data);
 }
 
 void FlappyCAN_Send3(uint16_t score){
@@ -124,6 +130,6 @@ void FlappyCAN_Send3(uint16_t score){
 	send_data.dataA[1] = score & 0xFF;
 	send_data.dataA[2] = send_data.dataA[3] = 0x0;
 	send_data.dataB[0] = send_data.dataB[1] = send_data.dataB[2] = send_data.dataB[3] = 0x0;
-	if (ch1_count>0) CAN_Send(LPC_CAN1, &send_data);
-	if (ch2_count>0) CAN_Send(LPC_CAN2, &send_data);
+	if (ch1_same_lobby_count>0) CAN_Send(LPC_CAN1, &send_data);
+	if (ch2_same_lobby_count>0) CAN_Send(LPC_CAN2, &send_data);
 }

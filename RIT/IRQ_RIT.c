@@ -42,7 +42,6 @@ extern uint8_t GAME_STATUS;
 
 void RIT_IRQHandler (void)
 {						
-	char str[20];
 	/* button management */
 	/* INT0 */
 	if(down_INT0!=0){ 
@@ -53,8 +52,7 @@ void RIT_IRQHandler (void)
 					// RIGHT BUTTON CODE HERE 
 					if (GAME_STATUS==0){
 						lobby = lobby == 7 ? 7 : lobby+1;
-						sprintf(str, "ID lobby: %d", lobby);
-						GUI_Text(MAX_X/2 + 20, MAX_Y-16, (uint8_t *) str, Black, BOTTOM_COLOR);
+						draw_bottom_line();
 						launch_sync();
 					}
 					break;
@@ -77,8 +75,7 @@ void RIT_IRQHandler (void)
 					// LEFT BUTTON CODE HERE 
 					if (GAME_STATUS==0){
 						lobby = lobby == 1 ? 1 : lobby-1;
-						sprintf(str, "ID lobby: %d", lobby);
-						GUI_Text(MAX_X/2 + 20, MAX_Y-16, (uint8_t *) str, Black, BOTTOM_COLOR);
+						draw_bottom_line();
 						launch_sync();
 					}
 					break;
@@ -101,8 +98,7 @@ void RIT_IRQHandler (void)
 					// CENTRAL BUTTON CODE HERE 
 					if (GAME_STATUS==0){
 						launch_sync();
-						sprintf(str, "CH1: %d - CH2: %d", ch1_same_lobby_count, ch2_same_lobby_count);
-						GUI_Text(0, MAX_Y-16,(uint8_t *) str, Black, BOTTOM_COLOR);
+						draw_bottom_line();
 					} else if (GAME_STATUS == 2){
 						disable_timer(0);
 					} else if (GAME_STATUS == 3){

@@ -53,20 +53,16 @@ Section Cross References
     irq_can.o(.text) refers to irq_rit.o(.data) for lobby
     can_func.o(.text) refers to irq_can.o(.text) for print_debug
     can_func.o(.text) refers to can_lib.o(.text) for CAN_Send
+    can_func.o(.text) refers to rand.o(.emb_text) for rand
     can_func.o(.text) refers to can_lib.o(.bss) for send_data
     can_func.o(.text) refers to irq_rit.o(.data) for lobby
     can_func.o(.text) refers to irq_can.o(.data) for ch1_count
     irq_button.o(.text) refers to irq_rit.o(.data) for down_INT0
-    irq_rit.o(.text) refers to _printf_percent.o(.ARM.Collect$$_printf_percent$$00000000) for _printf_percent
-    irq_rit.o(.text) refers to _printf_d.o(.ARM.Collect$$_printf_percent$$00000009) for _printf_d
-    irq_rit.o(.text) refers to _printf_dec.o(.text) for _printf_int_dec
-    irq_rit.o(.text) refers to noretval__2sprintf.o(.text) for __2sprintf
-    irq_rit.o(.text) refers to glcd.o(.text) for GUI_Text
+    irq_rit.o(.text) refers to resources.o(.text) for draw_bottom_line
     irq_rit.o(.text) refers to can_func.o(.text) for launch_sync
     irq_rit.o(.text) refers to lib_timer.o(.text) for disable_timer
     irq_rit.o(.text) refers to irq_rit.o(.data) for down_INT0
     irq_rit.o(.text) refers to flappy_bird.o(.data) for GAME_STATUS
-    irq_rit.o(.text) refers to irq_can.o(.data) for ch2_same_lobby_count
     touchpanel.o(.text) refers to glcd.o(.text) for LCD_SetPoint
     touchpanel.o(.text) refers to rt_memclr_w.o(.text) for __aeabi_memclr4
     touchpanel.o(.text) refers to dflt_clz.o(x$fpl$dflt) for __aeabi_i2d
@@ -535,60 +531,60 @@ Image Symbol Table
     .text                                    0x00004884   Section        0  can_lib.o(.text)
     .text                                    0x00004cc8   Section        0  irq_can.o(.text)
     replicate_message                        0x00004ccb   Thumb Code    54  irq_can.o(.text)
-    decodeMessage                            0x00004d01   Thumb Code   428  irq_can.o(.text)
-    .text                                    0x00004f60   Section        0  can_func.o(.text)
-    .text                                    0x00005250   Section        0  irq_button.o(.text)
-    __NVIC_DisableIRQ                        0x00005251   Thumb Code    30  irq_button.o(.text)
-    .text                                    0x00005308   Section        0  lib_button.o(.text)
-    __NVIC_EnableIRQ                         0x00005309   Thumb Code    34  lib_button.o(.text)
-    __NVIC_SetPriority                       0x0000532b   Thumb Code    32  lib_button.o(.text)
-    .text                                    0x000053dc   Section        0  irq_rit.o(.text)
-    __NVIC_EnableIRQ                         0x000053dd   Thumb Code    34  irq_rit.o(.text)
-    .text                                    0x000055f0   Section        0  lib_rit.o(.text)
-    .text                                    0x00005684   Section        0  touchpanel.o(.text)
-    ADS7843_SPI_Init                         0x00005695   Thumb Code   128  touchpanel.o(.text)
-    DelayUS                                  0x00005733   Thumb Code    28  touchpanel.o(.text)
-    WR_CMD                                   0x0000574f   Thumb Code    56  touchpanel.o(.text)
-    RD_AD                                    0x00005787   Thumb Code    42  touchpanel.o(.text)
-    .text                                    0x00006004   Section        0  flappy_bird.o(.text)
-    .text                                    0x00006378   Section        0  resources.o(.text)
-    .text                                    0x000066f0   Section        0  __printf.o(.text)
-    .text                                    0x00006758   Section        0  _printf_dec.o(.text)
-    .text                                    0x000067d0   Section        0  rand.o(.text)
-    .text                                    0x0000680c   Section      138  rt_memcpy_v6.o(.text)
-    .text                                    0x00006896   Section       78  rt_memclr_w.o(.text)
-    .text                                    0x000068e4   Section        0  heapauxi.o(.text)
-    .text                                    0x000068ea   Section        0  _printf_intcommon.o(.text)
-    .text                                    0x0000699c   Section        0  _printf_char_common.o(.text)
-    _printf_input_char                       0x0000699d   Thumb Code    10  _printf_char_common.o(.text)
-    .text                                    0x000069cc   Section        0  _sputc.o(.text)
-    .text                                    0x000069d6   Section      100  rt_memcpy_w.o(.text)
-    .text                                    0x00006a3a   Section       74  sys_stackheap_outer.o(.text)
-    .text                                    0x00006a84   Section        0  exit.o(.text)
-    .text                                    0x00006a98   Section        8  libspace.o(.text)
-    .text                                    0x00006aa0   Section        0  sys_exit.o(.text)
-    x$fpl$dadd                               0x00006aac   Section      336  daddsub_clz.o(x$fpl$dadd)
-    _dadd1                                   0x00006abd   Thumb Code     0  daddsub_clz.o(x$fpl$dadd)
-    x$fpl$dcmpinf                            0x00006bfc   Section       24  dcmpi.o(x$fpl$dcmpinf)
-    x$fpl$ddiv                               0x00006c14   Section      688  ddiv.o(x$fpl$ddiv)
-    ddiv_entry                               0x00006c1b   Thumb Code     0  ddiv.o(x$fpl$ddiv)
-    x$fpl$deqf                               0x00006ec4   Section      120  deqf.o(x$fpl$deqf)
-    x$fpl$dfixu                              0x00006f3c   Section       90  dfixu.o(x$fpl$dfixu)
-    x$fpl$dflt                               0x00006f96   Section       46  dflt_clz.o(x$fpl$dflt)
-    x$fpl$dfltu                              0x00006fc4   Section       38  dflt_clz.o(x$fpl$dfltu)
-    x$fpl$dmul                               0x00006fec   Section      340  dmul.o(x$fpl$dmul)
-    x$fpl$dnaninf                            0x00007140   Section      156  dnaninf.o(x$fpl$dnaninf)
-    x$fpl$dretinf                            0x000071dc   Section       12  dretinf.o(x$fpl$dretinf)
-    x$fpl$dsub                               0x000071e8   Section      468  daddsub_clz.o(x$fpl$dsub)
-    _dsub1                                   0x000071f9   Thumb Code     0  daddsub_clz.o(x$fpl$dsub)
-    .constdata                               0x000073bc   Section     1520  asciilib.o(.constdata)
-    AsciiLib                                 0x000073bc   Data        1520  asciilib.o(.constdata)
-    .constdata                               0x000079ac   Section    23552  resources.o(.constdata)
-    bird_image                               0x000079ac   Data        6528  resources.o(.constdata)
-    pipe                                     0x0000932c   Data          96  resources.o(.constdata)
-    pipe_up                                  0x0000938c   Data        2704  resources.o(.constdata)
-    pipe_down                                0x00009e1c   Data        2704  resources.o(.constdata)
-    sky                                      0x0000a8ac   Data       11520  resources.o(.constdata)
+    decodeMessage                            0x00004d01   Thumb Code   532  irq_can.o(.text)
+    .text                                    0x00004fc8   Section        0  can_func.o(.text)
+    .text                                    0x00005304   Section        0  irq_button.o(.text)
+    __NVIC_DisableIRQ                        0x00005305   Thumb Code    30  irq_button.o(.text)
+    .text                                    0x000053bc   Section        0  lib_button.o(.text)
+    __NVIC_EnableIRQ                         0x000053bd   Thumb Code    34  lib_button.o(.text)
+    __NVIC_SetPriority                       0x000053df   Thumb Code    32  lib_button.o(.text)
+    .text                                    0x00005490   Section        0  irq_rit.o(.text)
+    __NVIC_EnableIRQ                         0x00005491   Thumb Code    34  irq_rit.o(.text)
+    .text                                    0x00005614   Section        0  lib_rit.o(.text)
+    .text                                    0x000056a8   Section        0  touchpanel.o(.text)
+    ADS7843_SPI_Init                         0x000056b9   Thumb Code   128  touchpanel.o(.text)
+    DelayUS                                  0x00005757   Thumb Code    28  touchpanel.o(.text)
+    WR_CMD                                   0x00005773   Thumb Code    56  touchpanel.o(.text)
+    RD_AD                                    0x000057ab   Thumb Code    42  touchpanel.o(.text)
+    .text                                    0x00006028   Section        0  flappy_bird.o(.text)
+    .text                                    0x000063a0   Section        0  resources.o(.text)
+    .text                                    0x00006718   Section        0  __printf.o(.text)
+    .text                                    0x00006780   Section        0  _printf_dec.o(.text)
+    .text                                    0x000067f8   Section        0  rand.o(.text)
+    .text                                    0x00006834   Section      138  rt_memcpy_v6.o(.text)
+    .text                                    0x000068be   Section       78  rt_memclr_w.o(.text)
+    .text                                    0x0000690c   Section        0  heapauxi.o(.text)
+    .text                                    0x00006912   Section        0  _printf_intcommon.o(.text)
+    .text                                    0x000069c4   Section        0  _printf_char_common.o(.text)
+    _printf_input_char                       0x000069c5   Thumb Code    10  _printf_char_common.o(.text)
+    .text                                    0x000069f4   Section        0  _sputc.o(.text)
+    .text                                    0x000069fe   Section      100  rt_memcpy_w.o(.text)
+    .text                                    0x00006a62   Section       74  sys_stackheap_outer.o(.text)
+    .text                                    0x00006aac   Section        0  exit.o(.text)
+    .text                                    0x00006ac0   Section        8  libspace.o(.text)
+    .text                                    0x00006ac8   Section        0  sys_exit.o(.text)
+    x$fpl$dadd                               0x00006ad4   Section      336  daddsub_clz.o(x$fpl$dadd)
+    _dadd1                                   0x00006ae5   Thumb Code     0  daddsub_clz.o(x$fpl$dadd)
+    x$fpl$dcmpinf                            0x00006c24   Section       24  dcmpi.o(x$fpl$dcmpinf)
+    x$fpl$ddiv                               0x00006c3c   Section      688  ddiv.o(x$fpl$ddiv)
+    ddiv_entry                               0x00006c43   Thumb Code     0  ddiv.o(x$fpl$ddiv)
+    x$fpl$deqf                               0x00006eec   Section      120  deqf.o(x$fpl$deqf)
+    x$fpl$dfixu                              0x00006f64   Section       90  dfixu.o(x$fpl$dfixu)
+    x$fpl$dflt                               0x00006fbe   Section       46  dflt_clz.o(x$fpl$dflt)
+    x$fpl$dfltu                              0x00006fec   Section       38  dflt_clz.o(x$fpl$dfltu)
+    x$fpl$dmul                               0x00007014   Section      340  dmul.o(x$fpl$dmul)
+    x$fpl$dnaninf                            0x00007168   Section      156  dnaninf.o(x$fpl$dnaninf)
+    x$fpl$dretinf                            0x00007204   Section       12  dretinf.o(x$fpl$dretinf)
+    x$fpl$dsub                               0x00007210   Section      468  daddsub_clz.o(x$fpl$dsub)
+    _dsub1                                   0x00007221   Thumb Code     0  daddsub_clz.o(x$fpl$dsub)
+    .constdata                               0x000073e4   Section     1520  asciilib.o(.constdata)
+    AsciiLib                                 0x000073e4   Data        1520  asciilib.o(.constdata)
+    .constdata                               0x000079d4   Section    23552  resources.o(.constdata)
+    bird_image                               0x000079d4   Data        6528  resources.o(.constdata)
+    pipe                                     0x00009354   Data          96  resources.o(.constdata)
+    pipe_up                                  0x000093b4   Data        2704  resources.o(.constdata)
+    pipe_down                                0x00009e44   Data        2704  resources.o(.constdata)
+    sky                                      0x0000a8d4   Data       11520  resources.o(.constdata)
     .data                                    0x10000000   Section       13  irq_rit.o(.data)
     .data                                    0x1000000e   Section       14  flappy_bird.o(.data)
     .data                                    0x1000001c   Section        1  resources.o(.data)
@@ -775,92 +771,92 @@ Image Symbol Table
     CAN_DisableInterrupt                     0x00004cab   Thumb Code     6  can_lib.o(.text)
     CAN_resetTXerr                           0x00004cb1   Thumb Code    18  can_lib.o(.text)
     print_debug                              0x00004cc9   Thumb Code     2  irq_can.o(.text)
-    CAN_IRQHandler                           0x00004ead   Thumb Code    60  irq_can.o(.text)
-    send_syncrp                              0x00004f61   Thumb Code   208  can_func.o(.text)
-    send_syncrq                              0x00005031   Thumb Code   138  can_func.o(.text)
-    launch_sync                              0x000050bb   Thumb Code    16  can_func.o(.text)
-    FlappyCAN_Send1                          0x000050cb   Thumb Code    86  can_func.o(.text)
-    FlappyCAN_Send2                          0x00005121   Thumb Code   104  can_func.o(.text)
-    FlappyCAN_Send3                          0x00005189   Thumb Code    92  can_func.o(.text)
-    EINT0_IRQHandler                         0x0000526f   Thumb Code    42  irq_button.o(.text)
-    EINT1_IRQHandler                         0x00005299   Thumb Code    42  irq_button.o(.text)
-    EINT2_IRQHandler                         0x000052c3   Thumb Code    42  irq_button.o(.text)
-    BUTTON_init                              0x0000534b   Thumb Code   124  lib_button.o(.text)
-    RIT_IRQHandler                           0x000053ff   Thumb Code   422  irq_rit.o(.text)
-    enable_RIT                               0x000055f1   Thumb Code    14  lib_rit.o(.text)
-    disable_RIT                              0x000055ff   Thumb Code    14  lib_rit.o(.text)
-    reset_RIT                                0x0000560d   Thumb Code     8  lib_rit.o(.text)
-    init_RIT                                 0x00005615   Thumb Code    98  lib_rit.o(.text)
-    LPC17xx_SPI_SetSpeed                     0x00005685   Thumb Code    16  touchpanel.o(.text)
-    TP_Init                                  0x00005715   Thumb Code    30  touchpanel.o(.text)
-    Read_X                                   0x000057b1   Thumb Code    42  touchpanel.o(.text)
-    Read_Y                                   0x000057db   Thumb Code    42  touchpanel.o(.text)
-    TP_GetAdXY                               0x00005805   Thumb Code    34  touchpanel.o(.text)
-    TP_DrawPoint                             0x00005827   Thumb Code    20  touchpanel.o(.text)
-    DrawCross                                0x0000583b   Thumb Code   356  touchpanel.o(.text)
-    DeleteCross                              0x0000599f   Thumb Code   350  touchpanel.o(.text)
-    Read_Ads7846                             0x00005afd   Thumb Code   502  touchpanel.o(.text)
-    setCalibrationMatrix                     0x00005cf3   Thumb Code   356  touchpanel.o(.text)
-    getDisplayPoint                          0x00005e57   Thumb Code   262  touchpanel.o(.text)
-    TouchPanel_Calibrate                     0x00005f5d   Thumb Code   120  touchpanel.o(.text)
-    game_set                                 0x00006005   Thumb Code   270  flappy_bird.o(.text)
-    game_loop                                0x00006113   Thumb Code   514  flappy_bird.o(.text)
-    draw_bottom_line                         0x00006379   Thumb Code   146  resources.o(.text)
-    update_screen_score                      0x0000640b   Thumb Code    38  resources.o(.text)
-    draw_bg                                  0x00006431   Thumb Code    78  resources.o(.text)
-    clear_bird                               0x0000647f   Thumb Code   116  resources.o(.text)
-    draw_bird                                0x000064f3   Thumb Code   118  resources.o(.text)
-    clear_pipe                               0x00006569   Thumb Code    52  resources.o(.text)
-    draw_pipe                                0x0000659d   Thumb Code   228  resources.o(.text)
-    emit_tone                                0x00006681   Thumb Code    32  resources.o(.text)
-    __printf                                 0x000066f1   Thumb Code   104  __printf.o(.text)
-    _printf_int_dec                          0x00006759   Thumb Code   104  _printf_dec.o(.text)
-    srand                                    0x000067d1   Thumb Code    42  rand.o(.text)
-    _rand_init                               0x000067fb   Thumb Code     4  rand.o(.text)
-    __aeabi_memcpy                           0x0000680d   Thumb Code     0  rt_memcpy_v6.o(.text)
-    __rt_memcpy                              0x0000680d   Thumb Code   138  rt_memcpy_v6.o(.text)
-    _memcpy_lastbytes                        0x00006873   Thumb Code     0  rt_memcpy_v6.o(.text)
-    __aeabi_memclr4                          0x00006897   Thumb Code     0  rt_memclr_w.o(.text)
-    __aeabi_memclr8                          0x00006897   Thumb Code     0  rt_memclr_w.o(.text)
-    __rt_memclr_w                            0x00006897   Thumb Code    78  rt_memclr_w.o(.text)
-    _memset_w                                0x0000689b   Thumb Code     0  rt_memclr_w.o(.text)
-    __use_two_region_memory                  0x000068e5   Thumb Code     2  heapauxi.o(.text)
-    __rt_heap_escrow$2region                 0x000068e7   Thumb Code     2  heapauxi.o(.text)
-    __rt_heap_expand$2region                 0x000068e9   Thumb Code     2  heapauxi.o(.text)
-    _printf_int_common                       0x000068eb   Thumb Code   178  _printf_intcommon.o(.text)
-    _printf_char_common                      0x000069a7   Thumb Code    32  _printf_char_common.o(.text)
-    _sputc                                   0x000069cd   Thumb Code    10  _sputc.o(.text)
-    __aeabi_memcpy4                          0x000069d7   Thumb Code     0  rt_memcpy_w.o(.text)
-    __aeabi_memcpy8                          0x000069d7   Thumb Code     0  rt_memcpy_w.o(.text)
-    __rt_memcpy_w                            0x000069d7   Thumb Code   100  rt_memcpy_w.o(.text)
-    _memcpy_lastbytes_aligned                0x00006a1f   Thumb Code     0  rt_memcpy_w.o(.text)
-    __user_setup_stackheap                   0x00006a3b   Thumb Code    74  sys_stackheap_outer.o(.text)
-    exit                                     0x00006a85   Thumb Code    18  exit.o(.text)
-    __user_libspace                          0x00006a99   Thumb Code     8  libspace.o(.text)
-    __user_perproc_libspace                  0x00006a99   Thumb Code     0  libspace.o(.text)
-    __user_perthread_libspace                0x00006a99   Thumb Code     0  libspace.o(.text)
-    _sys_exit                                0x00006aa1   Thumb Code     8  sys_exit.o(.text)
-    __aeabi_dadd                             0x00006aad   Thumb Code     0  daddsub_clz.o(x$fpl$dadd)
-    _dadd                                    0x00006aad   Thumb Code   332  daddsub_clz.o(x$fpl$dadd)
-    __fpl_dcmp_Inf                           0x00006bfd   Thumb Code    24  dcmpi.o(x$fpl$dcmpinf)
-    __aeabi_ddiv                             0x00006c15   Thumb Code     0  ddiv.o(x$fpl$ddiv)
-    _ddiv                                    0x00006c15   Thumb Code   552  ddiv.o(x$fpl$ddiv)
-    __aeabi_cdcmpeq                          0x00006ec5   Thumb Code     0  deqf.o(x$fpl$deqf)
-    _dcmpeq                                  0x00006ec5   Thumb Code   120  deqf.o(x$fpl$deqf)
-    __aeabi_d2uiz                            0x00006f3d   Thumb Code     0  dfixu.o(x$fpl$dfixu)
-    _dfixu                                   0x00006f3d   Thumb Code    90  dfixu.o(x$fpl$dfixu)
-    __aeabi_i2d                              0x00006f97   Thumb Code     0  dflt_clz.o(x$fpl$dflt)
-    _dflt                                    0x00006f97   Thumb Code    46  dflt_clz.o(x$fpl$dflt)
-    __aeabi_ui2d                             0x00006fc5   Thumb Code     0  dflt_clz.o(x$fpl$dfltu)
-    _dfltu                                   0x00006fc5   Thumb Code    38  dflt_clz.o(x$fpl$dfltu)
-    __aeabi_dmul                             0x00006fed   Thumb Code     0  dmul.o(x$fpl$dmul)
-    _dmul                                    0x00006fed   Thumb Code   332  dmul.o(x$fpl$dmul)
-    __fpl_dnaninf                            0x00007141   Thumb Code   156  dnaninf.o(x$fpl$dnaninf)
-    __fpl_dretinf                            0x000071dd   Thumb Code    12  dretinf.o(x$fpl$dretinf)
-    __aeabi_dsub                             0x000071e9   Thumb Code     0  daddsub_clz.o(x$fpl$dsub)
-    _dsub                                    0x000071e9   Thumb Code   464  daddsub_clz.o(x$fpl$dsub)
-    Region$$Table$$Base                      0x0000d5ac   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x0000d5ec   Number         0  anon$$obj.o(Region$$Table)
+    CAN_IRQHandler                           0x00004f15   Thumb Code    60  irq_can.o(.text)
+    send_syncrp                              0x00004fc9   Thumb Code   208  can_func.o(.text)
+    send_syncrq                              0x00005099   Thumb Code   138  can_func.o(.text)
+    launch_sync                              0x00005123   Thumb Code    16  can_func.o(.text)
+    FlappyCAN_Send1                          0x00005133   Thumb Code    86  can_func.o(.text)
+    FlappyCAN_Send2                          0x00005189   Thumb Code   172  can_func.o(.text)
+    FlappyCAN_Send3                          0x00005235   Thumb Code    92  can_func.o(.text)
+    EINT0_IRQHandler                         0x00005323   Thumb Code    42  irq_button.o(.text)
+    EINT1_IRQHandler                         0x0000534d   Thumb Code    42  irq_button.o(.text)
+    EINT2_IRQHandler                         0x00005377   Thumb Code    42  irq_button.o(.text)
+    BUTTON_init                              0x000053ff   Thumb Code   124  lib_button.o(.text)
+    RIT_IRQHandler                           0x000054b3   Thumb Code   322  irq_rit.o(.text)
+    enable_RIT                               0x00005615   Thumb Code    14  lib_rit.o(.text)
+    disable_RIT                              0x00005623   Thumb Code    14  lib_rit.o(.text)
+    reset_RIT                                0x00005631   Thumb Code     8  lib_rit.o(.text)
+    init_RIT                                 0x00005639   Thumb Code    98  lib_rit.o(.text)
+    LPC17xx_SPI_SetSpeed                     0x000056a9   Thumb Code    16  touchpanel.o(.text)
+    TP_Init                                  0x00005739   Thumb Code    30  touchpanel.o(.text)
+    Read_X                                   0x000057d5   Thumb Code    42  touchpanel.o(.text)
+    Read_Y                                   0x000057ff   Thumb Code    42  touchpanel.o(.text)
+    TP_GetAdXY                               0x00005829   Thumb Code    34  touchpanel.o(.text)
+    TP_DrawPoint                             0x0000584b   Thumb Code    20  touchpanel.o(.text)
+    DrawCross                                0x0000585f   Thumb Code   356  touchpanel.o(.text)
+    DeleteCross                              0x000059c3   Thumb Code   350  touchpanel.o(.text)
+    Read_Ads7846                             0x00005b21   Thumb Code   502  touchpanel.o(.text)
+    setCalibrationMatrix                     0x00005d17   Thumb Code   356  touchpanel.o(.text)
+    getDisplayPoint                          0x00005e7b   Thumb Code   262  touchpanel.o(.text)
+    TouchPanel_Calibrate                     0x00005f81   Thumb Code   120  touchpanel.o(.text)
+    game_set                                 0x00006029   Thumb Code   270  flappy_bird.o(.text)
+    game_loop                                0x00006137   Thumb Code   514  flappy_bird.o(.text)
+    draw_bottom_line                         0x000063a1   Thumb Code   146  resources.o(.text)
+    update_screen_score                      0x00006433   Thumb Code    38  resources.o(.text)
+    draw_bg                                  0x00006459   Thumb Code    78  resources.o(.text)
+    clear_bird                               0x000064a7   Thumb Code   116  resources.o(.text)
+    draw_bird                                0x0000651b   Thumb Code   118  resources.o(.text)
+    clear_pipe                               0x00006591   Thumb Code    52  resources.o(.text)
+    draw_pipe                                0x000065c5   Thumb Code   228  resources.o(.text)
+    emit_tone                                0x000066a9   Thumb Code    32  resources.o(.text)
+    __printf                                 0x00006719   Thumb Code   104  __printf.o(.text)
+    _printf_int_dec                          0x00006781   Thumb Code   104  _printf_dec.o(.text)
+    srand                                    0x000067f9   Thumb Code    42  rand.o(.text)
+    _rand_init                               0x00006823   Thumb Code     4  rand.o(.text)
+    __aeabi_memcpy                           0x00006835   Thumb Code     0  rt_memcpy_v6.o(.text)
+    __rt_memcpy                              0x00006835   Thumb Code   138  rt_memcpy_v6.o(.text)
+    _memcpy_lastbytes                        0x0000689b   Thumb Code     0  rt_memcpy_v6.o(.text)
+    __aeabi_memclr4                          0x000068bf   Thumb Code     0  rt_memclr_w.o(.text)
+    __aeabi_memclr8                          0x000068bf   Thumb Code     0  rt_memclr_w.o(.text)
+    __rt_memclr_w                            0x000068bf   Thumb Code    78  rt_memclr_w.o(.text)
+    _memset_w                                0x000068c3   Thumb Code     0  rt_memclr_w.o(.text)
+    __use_two_region_memory                  0x0000690d   Thumb Code     2  heapauxi.o(.text)
+    __rt_heap_escrow$2region                 0x0000690f   Thumb Code     2  heapauxi.o(.text)
+    __rt_heap_expand$2region                 0x00006911   Thumb Code     2  heapauxi.o(.text)
+    _printf_int_common                       0x00006913   Thumb Code   178  _printf_intcommon.o(.text)
+    _printf_char_common                      0x000069cf   Thumb Code    32  _printf_char_common.o(.text)
+    _sputc                                   0x000069f5   Thumb Code    10  _sputc.o(.text)
+    __aeabi_memcpy4                          0x000069ff   Thumb Code     0  rt_memcpy_w.o(.text)
+    __aeabi_memcpy8                          0x000069ff   Thumb Code     0  rt_memcpy_w.o(.text)
+    __rt_memcpy_w                            0x000069ff   Thumb Code   100  rt_memcpy_w.o(.text)
+    _memcpy_lastbytes_aligned                0x00006a47   Thumb Code     0  rt_memcpy_w.o(.text)
+    __user_setup_stackheap                   0x00006a63   Thumb Code    74  sys_stackheap_outer.o(.text)
+    exit                                     0x00006aad   Thumb Code    18  exit.o(.text)
+    __user_libspace                          0x00006ac1   Thumb Code     8  libspace.o(.text)
+    __user_perproc_libspace                  0x00006ac1   Thumb Code     0  libspace.o(.text)
+    __user_perthread_libspace                0x00006ac1   Thumb Code     0  libspace.o(.text)
+    _sys_exit                                0x00006ac9   Thumb Code     8  sys_exit.o(.text)
+    __aeabi_dadd                             0x00006ad5   Thumb Code     0  daddsub_clz.o(x$fpl$dadd)
+    _dadd                                    0x00006ad5   Thumb Code   332  daddsub_clz.o(x$fpl$dadd)
+    __fpl_dcmp_Inf                           0x00006c25   Thumb Code    24  dcmpi.o(x$fpl$dcmpinf)
+    __aeabi_ddiv                             0x00006c3d   Thumb Code     0  ddiv.o(x$fpl$ddiv)
+    _ddiv                                    0x00006c3d   Thumb Code   552  ddiv.o(x$fpl$ddiv)
+    __aeabi_cdcmpeq                          0x00006eed   Thumb Code     0  deqf.o(x$fpl$deqf)
+    _dcmpeq                                  0x00006eed   Thumb Code   120  deqf.o(x$fpl$deqf)
+    __aeabi_d2uiz                            0x00006f65   Thumb Code     0  dfixu.o(x$fpl$dfixu)
+    _dfixu                                   0x00006f65   Thumb Code    90  dfixu.o(x$fpl$dfixu)
+    __aeabi_i2d                              0x00006fbf   Thumb Code     0  dflt_clz.o(x$fpl$dflt)
+    _dflt                                    0x00006fbf   Thumb Code    46  dflt_clz.o(x$fpl$dflt)
+    __aeabi_ui2d                             0x00006fed   Thumb Code     0  dflt_clz.o(x$fpl$dfltu)
+    _dfltu                                   0x00006fed   Thumb Code    38  dflt_clz.o(x$fpl$dfltu)
+    __aeabi_dmul                             0x00007015   Thumb Code     0  dmul.o(x$fpl$dmul)
+    _dmul                                    0x00007015   Thumb Code   332  dmul.o(x$fpl$dmul)
+    __fpl_dnaninf                            0x00007169   Thumb Code   156  dnaninf.o(x$fpl$dnaninf)
+    __fpl_dretinf                            0x00007205   Thumb Code    12  dretinf.o(x$fpl$dretinf)
+    __aeabi_dsub                             0x00007211   Thumb Code     0  daddsub_clz.o(x$fpl$dsub)
+    _dsub                                    0x00007211   Thumb Code   464  daddsub_clz.o(x$fpl$dsub)
+    Region$$Table$$Base                      0x0000d5d4   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x0000d614   Number         0  anon$$obj.o(Region$$Table)
     down_INT0                                0x10000000   Data           4  irq_rit.o(.data)
     down_KEY1                                0x10000004   Data           4  irq_rit.o(.data)
     down_KEY2                                0x10000008   Data           4  irq_rit.o(.data)
@@ -901,9 +897,9 @@ Memory Map of the image
 
   Image Entry point : 0x000000cd
 
-  Load Region LR_IROM1 (Base: 0x00000000, Size: 0x0000d690, Max: 0x00080000, ABSOLUTE)
+  Load Region LR_IROM1 (Base: 0x00000000, Size: 0x0000d6b8, Max: 0x00080000, ABSOLUTE)
 
-    Execution Region ER_IROM1 (Exec base: 0x00000000, Load base: 0x00000000, Size: 0x0000d5ec, Max: 0x00080000, ABSOLUTE)
+    Execution Region ER_IROM1 (Exec base: 0x00000000, Load base: 0x00000000, Size: 0x0000d614, Max: 0x00080000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -974,74 +970,74 @@ Memory Map of the image
     0x00004670   0x00004670   0x00000098   Code   RO          193    .text               irq_timer.o
     0x00004708   0x00004708   0x0000017c   Code   RO          247    .text               lib_timer.o
     0x00004884   0x00004884   0x00000444   Code   RO          275    .text               can_lib.o
-    0x00004cc8   0x00004cc8   0x00000298   Code   RO          310    .text               irq_can.o
-    0x00004f60   0x00004f60   0x000002f0   Code   RO          355    .text               can_func.o
-    0x00005250   0x00005250   0x000000b8   Code   RO          380    .text               irq_button.o
-    0x00005308   0x00005308   0x000000d4   Code   RO          409    .text               lib_button.o
-    0x000053dc   0x000053dc   0x00000214   Code   RO          433    .text               irq_rit.o
-    0x000055f0   0x000055f0   0x00000094   Code   RO          482    .text               lib_rit.o
-    0x00005684   0x00005684   0x00000980   Code   RO          561    .text               touchpanel.o
-    0x00006004   0x00006004   0x00000374   Code   RO          595    .text               flappy_bird.o
-    0x00006378   0x00006378   0x00000378   Code   RO          641    .text               resources.o
-    0x000066f0   0x000066f0   0x00000068   Code   RO          673    .text               c_w.l(__printf.o)
-    0x00006758   0x00006758   0x00000078   Code   RO          675    .text               c_w.l(_printf_dec.o)
-    0x000067d0   0x000067d0   0x0000003c   Code   RO          700    .text               c_w.l(rand.o)
-    0x0000680c   0x0000680c   0x0000008a   Code   RO          704    .text               c_w.l(rt_memcpy_v6.o)
-    0x00006896   0x00006896   0x0000004e   Code   RO          706    .text               c_w.l(rt_memclr_w.o)
-    0x000068e4   0x000068e4   0x00000006   Code   RO          708    .text               c_w.l(heapauxi.o)
-    0x000068ea   0x000068ea   0x000000b2   Code   RO          737    .text               c_w.l(_printf_intcommon.o)
-    0x0000699c   0x0000699c   0x00000030   Code   RO          739    .text               c_w.l(_printf_char_common.o)
-    0x000069cc   0x000069cc   0x0000000a   Code   RO          741    .text               c_w.l(_sputc.o)
-    0x000069d6   0x000069d6   0x00000064   Code   RO          744    .text               c_w.l(rt_memcpy_w.o)
-    0x00006a3a   0x00006a3a   0x0000004a   Code   RO          819    .text               c_w.l(sys_stackheap_outer.o)
-    0x00006a84   0x00006a84   0x00000012   Code   RO          821    .text               c_w.l(exit.o)
-    0x00006a96   0x00006a96   0x00000002   PAD
-    0x00006a98   0x00006a98   0x00000008   Code   RO          835    .text               c_w.l(libspace.o)
-    0x00006aa0   0x00006aa0   0x0000000c   Code   RO          862    .text               c_w.l(sys_exit.o)
-    0x00006aac   0x00006aac   0x00000150   Code   RO          712    x$fpl$dadd          fz_ws.l(daddsub_clz.o)
-    0x00006bfc   0x00006bfc   0x00000018   Code   RO          791    x$fpl$dcmpinf       fz_ws.l(dcmpi.o)
-    0x00006c14   0x00006c14   0x000002b0   Code   RO          719    x$fpl$ddiv          fz_ws.l(ddiv.o)
-    0x00006ec4   0x00006ec4   0x00000078   Code   RO          722    x$fpl$deqf          fz_ws.l(deqf.o)
-    0x00006f3c   0x00006f3c   0x0000005a   Code   RO          724    x$fpl$dfixu         fz_ws.l(dfixu.o)
-    0x00006f96   0x00006f96   0x0000002e   Code   RO          729    x$fpl$dflt          fz_ws.l(dflt_clz.o)
-    0x00006fc4   0x00006fc4   0x00000026   Code   RO          728    x$fpl$dfltu         fz_ws.l(dflt_clz.o)
-    0x00006fea   0x00006fea   0x00000002   PAD
-    0x00006fec   0x00006fec   0x00000154   Code   RO          734    x$fpl$dmul          fz_ws.l(dmul.o)
-    0x00007140   0x00007140   0x0000009c   Code   RO          793    x$fpl$dnaninf       fz_ws.l(dnaninf.o)
-    0x000071dc   0x000071dc   0x0000000c   Code   RO          795    x$fpl$dretinf       fz_ws.l(dretinf.o)
-    0x000071e8   0x000071e8   0x000001d4   Code   RO          714    x$fpl$dsub          fz_ws.l(daddsub_clz.o)
-    0x000073bc   0x000073bc   0x000005f0   Data   RO            2    .constdata          asciilib.o
-    0x000079ac   0x000079ac   0x00005c00   Data   RO          642    .constdata          resources.o
-    0x0000d5ac   0x0000d5ac   0x00000040   Data   RO          909    Region$$Table       anon$$obj.o
+    0x00004cc8   0x00004cc8   0x00000300   Code   RO          310    .text               irq_can.o
+    0x00004fc8   0x00004fc8   0x0000033c   Code   RO          355    .text               can_func.o
+    0x00005304   0x00005304   0x000000b8   Code   RO          380    .text               irq_button.o
+    0x000053bc   0x000053bc   0x000000d4   Code   RO          409    .text               lib_button.o
+    0x00005490   0x00005490   0x00000184   Code   RO          433    .text               irq_rit.o
+    0x00005614   0x00005614   0x00000094   Code   RO          482    .text               lib_rit.o
+    0x000056a8   0x000056a8   0x00000980   Code   RO          561    .text               touchpanel.o
+    0x00006028   0x00006028   0x00000378   Code   RO          595    .text               flappy_bird.o
+    0x000063a0   0x000063a0   0x00000378   Code   RO          641    .text               resources.o
+    0x00006718   0x00006718   0x00000068   Code   RO          673    .text               c_w.l(__printf.o)
+    0x00006780   0x00006780   0x00000078   Code   RO          675    .text               c_w.l(_printf_dec.o)
+    0x000067f8   0x000067f8   0x0000003c   Code   RO          700    .text               c_w.l(rand.o)
+    0x00006834   0x00006834   0x0000008a   Code   RO          704    .text               c_w.l(rt_memcpy_v6.o)
+    0x000068be   0x000068be   0x0000004e   Code   RO          706    .text               c_w.l(rt_memclr_w.o)
+    0x0000690c   0x0000690c   0x00000006   Code   RO          708    .text               c_w.l(heapauxi.o)
+    0x00006912   0x00006912   0x000000b2   Code   RO          737    .text               c_w.l(_printf_intcommon.o)
+    0x000069c4   0x000069c4   0x00000030   Code   RO          739    .text               c_w.l(_printf_char_common.o)
+    0x000069f4   0x000069f4   0x0000000a   Code   RO          741    .text               c_w.l(_sputc.o)
+    0x000069fe   0x000069fe   0x00000064   Code   RO          744    .text               c_w.l(rt_memcpy_w.o)
+    0x00006a62   0x00006a62   0x0000004a   Code   RO          819    .text               c_w.l(sys_stackheap_outer.o)
+    0x00006aac   0x00006aac   0x00000012   Code   RO          821    .text               c_w.l(exit.o)
+    0x00006abe   0x00006abe   0x00000002   PAD
+    0x00006ac0   0x00006ac0   0x00000008   Code   RO          835    .text               c_w.l(libspace.o)
+    0x00006ac8   0x00006ac8   0x0000000c   Code   RO          862    .text               c_w.l(sys_exit.o)
+    0x00006ad4   0x00006ad4   0x00000150   Code   RO          712    x$fpl$dadd          fz_ws.l(daddsub_clz.o)
+    0x00006c24   0x00006c24   0x00000018   Code   RO          791    x$fpl$dcmpinf       fz_ws.l(dcmpi.o)
+    0x00006c3c   0x00006c3c   0x000002b0   Code   RO          719    x$fpl$ddiv          fz_ws.l(ddiv.o)
+    0x00006eec   0x00006eec   0x00000078   Code   RO          722    x$fpl$deqf          fz_ws.l(deqf.o)
+    0x00006f64   0x00006f64   0x0000005a   Code   RO          724    x$fpl$dfixu         fz_ws.l(dfixu.o)
+    0x00006fbe   0x00006fbe   0x0000002e   Code   RO          729    x$fpl$dflt          fz_ws.l(dflt_clz.o)
+    0x00006fec   0x00006fec   0x00000026   Code   RO          728    x$fpl$dfltu         fz_ws.l(dflt_clz.o)
+    0x00007012   0x00007012   0x00000002   PAD
+    0x00007014   0x00007014   0x00000154   Code   RO          734    x$fpl$dmul          fz_ws.l(dmul.o)
+    0x00007168   0x00007168   0x0000009c   Code   RO          793    x$fpl$dnaninf       fz_ws.l(dnaninf.o)
+    0x00007204   0x00007204   0x0000000c   Code   RO          795    x$fpl$dretinf       fz_ws.l(dretinf.o)
+    0x00007210   0x00007210   0x000001d4   Code   RO          714    x$fpl$dsub          fz_ws.l(daddsub_clz.o)
+    0x000073e4   0x000073e4   0x000005f0   Data   RO            2    .constdata          asciilib.o
+    0x000079d4   0x000079d4   0x00005c00   Data   RO          642    .constdata          resources.o
+    0x0000d5d4   0x0000d5d4   0x00000040   Data   RO          909    Region$$Table       anon$$obj.o
 
 
-    Execution Region RW_IRAM1 (Exec base: 0x10000000, Load base: 0x0000d5ec, Size: 0x00000238, Max: 0x00008000, ABSOLUTE)
+    Execution Region RW_IRAM1 (Exec base: 0x10000000, Load base: 0x0000d614, Size: 0x00000238, Max: 0x00008000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x10000000   0x0000d5ec   0x0000000d   Data   RW          435    .data               irq_rit.o
-    0x1000000d   0x0000d5f9   0x00000001   PAD
-    0x1000000e   0x0000d5fa   0x0000000e   Data   RW          597    .data               flappy_bird.o
-    0x1000001c   0x0000d608   0x00000001   Data   RW          643    .data               resources.o
-    0x1000001d   0x0000d609   0x00000003   PAD
+    0x10000000   0x0000d614   0x0000000d   Data   RW          435    .data               irq_rit.o
+    0x1000000d   0x0000d621   0x00000001   PAD
+    0x1000000e   0x0000d622   0x0000000e   Data   RW          597    .data               flappy_bird.o
+    0x1000001c   0x0000d630   0x00000001   Data   RW          643    .data               resources.o
+    0x1000001d   0x0000d631   0x00000003   PAD
     0x10000020        -       0x00000014   Zero   RW          276    .bss                can_lib.o
-    0x10000034   0x0000d609   0x00000004   PAD
+    0x10000034   0x0000d631   0x00000004   PAD
     0x10000038        -       0x00000200   Zero   RW           96    STACK               startup_lpc17xx.o
 
 
-    Execution Region RW_IRAM2 (Exec base: 0x2007c000, Load base: 0x0000d60c, Size: 0x00000238, Max: 0x00008000, ABSOLUTE)
+    Execution Region RW_IRAM2 (Exec base: 0x2007c000, Load base: 0x0000d634, Size: 0x00000238, Max: 0x00008000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x2007c000   0x0000d60c   0x00000001   Data   RW           27    .data               glcd.o
-    0x2007c001   0x0000d60d   0x00000003   PAD
-    0x2007c004   0x0000d610   0x00000004   Data   RW          167    .data               system_lpc17xx.o
-    0x2007c008   0x0000d614   0x00000061   Data   RW          194    .data               irq_timer.o
-    0x2007c069   0x0000d675   0x00000005   Data   RW          312    .data               irq_can.o
-    0x2007c06e   0x0000d67a   0x00000014   Data   RW          563    .data               touchpanel.o
-    0x2007c082   0x0000d68e   0x00000002   PAD
+    0x2007c000   0x0000d634   0x00000001   Data   RW           27    .data               glcd.o
+    0x2007c001   0x0000d635   0x00000003   PAD
+    0x2007c004   0x0000d638   0x00000004   Data   RW          167    .data               system_lpc17xx.o
+    0x2007c008   0x0000d63c   0x00000061   Data   RW          194    .data               irq_timer.o
+    0x2007c069   0x0000d69d   0x00000005   Data   RW          312    .data               irq_can.o
+    0x2007c06e   0x0000d6a2   0x00000014   Data   RW          563    .data               touchpanel.o
+    0x2007c082   0x0000d6b6   0x00000002   PAD
     0x2007c084        -       0x00000028   Zero   RW          311    .bss                irq_can.o
-    0x2007c0ac   0x0000d68e   0x00000004   PAD
+    0x2007c0ac   0x0000d6b6   0x00000004   PAD
     0x2007c0b0        -       0x00000044   Zero   RW          562    .bss                touchpanel.o
     0x2007c0f4        -       0x000000e4   Zero   RW          701    .bss                c_w.l(rand.o)
     0x2007c1d8        -       0x00000060   Zero   RW          836    .bss                c_w.l(libspace.o)
@@ -1055,26 +1051,26 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-        32          6       1520          0          0       2463   asciilib.o
-       752        108          0          0          0       2450   can_func.o
-      1092         42          0          0         20      30832   can_lib.o
-       884        100          0         14          0       3366   flappy_bird.o
-     16708        104          0          1          0      43628   glcd.o
+        32          6       1520          0          0       2447   asciilib.o
+       828        116          0          0          0       2590   can_func.o
+      1092         42          0          0         20      30840   can_lib.o
+       888        104          0         14          0       3350   flappy_bird.o
+     16708        104          0          1          0      43612   glcd.o
        184         28          0          0          0        965   irq_button.o
-       664        120          0          5         40       2645   irq_can.o
-       532         76          0         13          0       1846   irq_rit.o
-       152         30          0         97          0      18621   irq_timer.o
+       768        120          0          5         40       2789   irq_can.o
+       388         32          0         13          0       1770   irq_rit.o
+       152         30          0         97          0      18633   irq_timer.o
        212         22          0          0          0        922   lib_button.o
-       148         14          0          0          0      27451   lib_rit.o
+       148         14          0          0          0      27471   lib_rit.o
        380         22          0          0          0       1756   lib_timer.o
-       888         80      23552          1          0       3399   resources.o
-       212         40          0          0          0        507   sample.o
-        56         22        204          0        512        968   startup_lpc17xx.o
-       556         30          0          4          0        811   system_lpc17xx.o
-      2432         72          0         20         68       6166   touchpanel.o
+       888         80      23552          1          0       3395   resources.o
+       212         40          0          0          0        499   sample.o
+        56         22        204          0        512        960   startup_lpc17xx.o
+       556         30          0          4          0        803   system_lpc17xx.o
+      2432         72          0         20         68       6154   touchpanel.o
 
     ----------------------------------------------------------------------
-     25884        916      25340        164        648     148796   Object Totals
+     25924        884      25340        164        648     148956   Object Totals
          0          0         64          0          0          0   (incl. Generated)
          0          0          0          9          8          0   (incl. Padding)
 
@@ -1147,15 +1143,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     29424       1158      25340        164        972     149172   Grand Totals
-     29424       1158      25340        164        972     149172   ELF Image Totals
-     29424       1158      25340        164          0          0   ROM Totals
+     29464       1126      25340        164        972     149332   Grand Totals
+     29464       1126      25340        164        972     149332   ELF Image Totals
+     29464       1126      25340        164          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                54764 (  53.48kB)
+    Total RO  Size (Code + RO Data)                54804 (  53.52kB)
     Total RW  Size (RW Data + ZI Data)              1136 (   1.11kB)
-    Total ROM Size (Code + RO Data + RW Data)      54928 (  53.64kB)
+    Total ROM Size (Code + RO Data + RW Data)      54968 (  53.68kB)
 
 ==============================================================================
 

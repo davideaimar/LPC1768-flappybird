@@ -85,28 +85,34 @@ static void decodeMessage(CAN_MSG * rec_data, LPC_CAN_TypeDef * REC_CH) {
 	}
 	// if the received message is in the same lobby of the current instance then process the message.
 	else if (rec_lobby == lobby) {
-		uint8_t other_channel_count;
+		uint8_t other_channel_count = REC_CH == LPC_CAN1 ? ch2_same_lobby_count : ch1_same_lobby_count;
 		uint16_t start_y, score;
 		int16_t start_speed;
 		rec_id = rec_data->id & 0xff;
 		switch (rec_id) {
 			case 0x1:
-				replicate_message(REC_CH, rec_data);
+				if (other_channel_count>0)
+					replicate_message(REC_CH, rec_data);
 				game_set(150, 0, 0, 1);
 				break;
 			case 0x2:
-				other_channel_count = REC_CH == LPC_CAN1 ? ch2_same_lobby_count : ch1_same_lobby_count;
 				if ( (other_channel_count == 0) || ((rand() % other_channel_count) == 0) ){
 					start_y = (rec_data->dataA[0] << 8) | rec_data->dataA[1];
 					start_speed = (rec_data->dataA[2] << 8) | rec_data->dataA[3];
 					score = (rec_data->dataB[0] << 8) | rec_data->dataB[1];
 					game_set(start_y, start_speed, score, 2);
 				}
-				else
-					replicate_message(REC_CH, rec_data);
+				else if (ch1_same_lobby_count > 0 && ch2_same_lobby_count > 0){
+					uint8_t ch = (rand() % 2);
+					if (ch==0) CAN_Send(LPC_CAN1, rec_data);
+					else CAN_Send(LPC_CAN2, rec_data);
+				}
+				else if (ch1_same_lobby_count>0) CAN_Send(LPC_CAN1, rec_data);
+				else if (ch2_same_lobby_count>0) CAN_Send(LPC_CAN2, rec_data);
 				break;
 			case 0x3:
-				replicate_message(REC_CH, rec_data);
+				if (other_channel_count>0)
+					replicate_message(REC_CH, rec_data);
 				score = (rec_data->dataA[0] << 8) | rec_data->dataA[1];
 				game_set(150, 0, score, 4);
 				break;
