@@ -52,7 +52,7 @@ void RIT_IRQHandler (void)
 					// RIGHT BUTTON CODE HERE 
 					if (GAME_STATUS==0){
 						lobby = lobby == 7 ? 7 : lobby+1;
-						draw_bottom_line();
+						// draw_bottom_line();
 						launch_sync();
 					}
 					break;
@@ -75,7 +75,7 @@ void RIT_IRQHandler (void)
 					// LEFT BUTTON CODE HERE 
 					if (GAME_STATUS==0){
 						lobby = lobby == 1 ? 1 : lobby-1;
-						draw_bottom_line();
+						// draw_bottom_line();
 						launch_sync();
 					}
 					break;
@@ -100,8 +100,10 @@ void RIT_IRQHandler (void)
 						launch_sync();
 						draw_bottom_line();
 					} else if (GAME_STATUS == 2){
+						GAME_STATUS = 3;
 						disable_timer(0);
 					} else if (GAME_STATUS == 3){
+						GAME_STATUS = 2;
 						enable_timer(0);
 					}
 					break;

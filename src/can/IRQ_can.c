@@ -48,7 +48,9 @@ static void decodeMessage(CAN_MSG * rec_data, LPC_CAN_TypeDef * REC_CH) {
 			case 0x0:
 				// received sync request
 				// forward the request (error handling is in the function)
+				#if DEBUG
 				print_debug((uint8_t *) "Received sync request");
+				#endif
 				send_syncrq(REC_CH==LPC_CAN1 ? LPC_CAN2 : LPC_CAN1);
 				break;
 			case 0x1:
@@ -56,8 +58,10 @@ static void decodeMessage(CAN_MSG * rec_data, LPC_CAN_TypeDef * REC_CH) {
 				rec_rp_count = rec_data->dataA[0];
 				if (REC_CH==LPC_CAN1){
 					ch1_count = rec_rp_count;
+					#if DEBUG
 					sprintf(str, "Rep rec on CH1. CH1: %d CH2: %d", ch1_count, ch2_count);
 					print_debug((uint8_t *) str); // debug
+					#endif
 					if (lobby <= 3) {
 						ch1_same_lobby_count = rec_data->dataA[lobby];
 					} else {
@@ -66,8 +70,10 @@ static void decodeMessage(CAN_MSG * rec_data, LPC_CAN_TypeDef * REC_CH) {
 					send_syncrp(LPC_CAN2, rec_rp_count+1, rec_data);
 				}else{
 					ch2_count = rec_rp_count;
+					#if DEBUG
 					sprintf(str, "Rep rec on CH2. CH1: %d CH2: %d", ch1_count, ch2_count);
 					print_debug((uint8_t *) str); // debug
+					#endif
 					if (lobby <= 3) {
 						ch2_same_lobby_count = rec_data->dataA[lobby];
 					} else {
@@ -96,7 +102,7 @@ static void decodeMessage(CAN_MSG * rec_data, LPC_CAN_TypeDef * REC_CH) {
 				game_set(150, 0, 0, 1);
 				break;
 			case 0x2:
-				if ( (other_channel_count == 0) || ((rand() % other_channel_count) == 0) ){
+				if ( (other_channel_count == 0) || ((rand() % (other_channel_count+1) ) == 0) ){
 					start_y = (rec_data->dataA[0] << 8) | rec_data->dataA[1];
 					start_speed = (rec_data->dataA[2] << 8) | rec_data->dataA[3];
 					score = (rec_data->dataB[0] << 8) | rec_data->dataB[1];

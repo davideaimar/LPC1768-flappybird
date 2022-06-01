@@ -70,6 +70,7 @@ void TIMER2_IRQHandler (void)
 		if (num_sin > N_SIN ){
 			num_sin = 0;
 			ticks = 0;
+			LPC_DAC->DACR = 0;
 			disable_timer(2);
 		}
 	}	
