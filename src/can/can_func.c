@@ -14,11 +14,10 @@ extern CAN_MSG send_data;
 void launch_sync(){
 	send_syncrq(LPC_CAN1);
 	send_syncrq(LPC_CAN2);
-	draw_bottom_line();
 }
 
 void send_syncrq(LPC_CAN_TypeDef * CH){
-	uint8_t attempt = 3;
+	uint32_t attempt = 3;
 	if (CH==LPC_CAN1)
 		print_debug((uint8_t *) "Send req on CH1");
 	else
@@ -27,7 +26,7 @@ void send_syncrq(LPC_CAN_TypeDef * CH){
 	send_data.len = 0;
 	send_data.id_format = 0;
 	send_data.msg_type = 0;
-	//CAN_resetTXerr(CH);
+	// CAN_resetTXerr(CH);
 	while (CAN_Send(CH, &send_data)!= 0 && attempt > 0 )
 		attempt--;
 	// wait for the transmission to finish
@@ -42,12 +41,14 @@ void send_syncrq(LPC_CAN_TypeDef * CH){
 		if (CH==LPC_CAN1){
 			ch1_count = 0;
 			ch1_same_lobby_count = 0;
-			send_syncrp(LPC_CAN2, 1, &send_data); 
+			send_syncrp(LPC_CAN2, 1, &send_data);
+			draw_bottom_line(); 
 		}
 		else {
 			ch2_count = 0;  
 			ch2_same_lobby_count = 0;
 			send_syncrp(LPC_CAN1, 1, &send_data);
+			draw_bottom_line();
 		}
 		CAN_resetTXerr(CH);
 	}

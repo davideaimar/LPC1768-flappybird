@@ -34,7 +34,7 @@ extern uint8_t ch2_count;
 extern uint8_t ch1_same_lobby_count;
 extern uint8_t ch2_same_lobby_count;
 
-uint8_t lobby = 1; // 1...7 -> first 3 bit of CAN ID
+volatile uint8_t lobby = 1; // 1...7 -> first 3 bit of CAN ID
 CAN_MSG rec_data;
 extern CAN_MSG send_data;
 extern uint32_t counter;
@@ -54,6 +54,8 @@ void RIT_IRQHandler (void)
 						lobby = lobby == 7 ? 7 : lobby+1;
 						// draw_bottom_line();
 						launch_sync();
+						launch_sync();
+						// draw_bottom_line();
 					}
 					break;
 				default:
@@ -77,6 +79,8 @@ void RIT_IRQHandler (void)
 						lobby = lobby == 1 ? 1 : lobby-1;
 						// draw_bottom_line();
 						launch_sync();
+						launch_sync();
+						// draw_bottom_line();
 					}
 					break;
 				default:
@@ -98,7 +102,7 @@ void RIT_IRQHandler (void)
 					// CENTRAL BUTTON CODE HERE 
 					if (GAME_STATUS==0){
 						launch_sync();
-						draw_bottom_line();
+						// draw_bottom_line();
 					} else if (GAME_STATUS == 2){
 						GAME_STATUS = 3;
 						disable_timer(0);

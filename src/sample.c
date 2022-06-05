@@ -31,6 +31,8 @@
 #include "flappy_bird/flappy_bird.h"
 #include <stdlib.h>
 
+extern uint8_t lobby;
+
 int main(void)
 {
 	SystemInit(); /* System Initialization (i.e., PLL)  */
@@ -47,17 +49,20 @@ int main(void)
 
 	LCD_Initialization();
 	TP_Init();
+	TouchPanel_Calibrate();
+	
 	init_RIT(0x004C4B40);
 	CAN_Init(LPC_CAN1, 125000);
 	CAN_Init(LPC_CAN2, 125000);
 
-	TouchPanel_Calibrate();
 	enable_RIT();
 
 	// init_timer(1, 0x5F5E100 ); 						/* 500ms * 25MHz */
 
 	CAN_EnableInterrupt(LPC_CAN1);
 	CAN_EnableInterrupt(LPC_CAN2);
+	
+	lobby = 1;
 
 	launch_sync();
 
